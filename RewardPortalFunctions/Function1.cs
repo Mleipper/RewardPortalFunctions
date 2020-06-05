@@ -12,12 +12,13 @@ namespace RewardPortalFunctions
         [FunctionName("Function1")]
         public static async void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            var connectionString = "";
+            var connectionString = Environment.GetEnvironmentVariable("PortalDB");
+
             using (var connection = new SqlConnection(connectionString))
             {
-                await connection.ExecuteAsync("Execute Addreview");
+                await connection.ExecuteAsync("[rewardpo_earn].[sp_AddSurveyTasks]");
             }
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            //log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         }
     }
 }
